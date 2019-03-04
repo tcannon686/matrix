@@ -8,15 +8,15 @@
 class Matrix;
 class Vector;
 
-Matrix operator*(Matrix &a, Matrix &b);
-Vector operator*(Matrix &a, Vector &b);
-Matrix operator*(Matrix &a, vecc_t b);
-Matrix operator+(Matrix &a, Matrix &b);
-Matrix operator-(Matrix &a, Matrix &b);
+Matrix operator*(Matrix a, Matrix b);
+Vector operator*(Matrix a, Vector b);
+Matrix operator*(Matrix a, vecc_t b);
+Matrix operator+(Matrix a, Matrix b);
+Matrix operator-(Matrix a, Matrix b);
 
-Vector operator*(Vector &a, vecc_t b);
-Vector operator+(Vector &a, Vector &b);
-Vector operator-(Vector &a, Vector &b);
+Vector operator*(Vector a, vecc_t b);
+Vector operator+(Vector a, Vector b);
+Vector operator-(Vector a, Vector b);
 
 class Matrix
 {
@@ -29,13 +29,33 @@ class Matrix
 			vecc_t m21, vecc_t m22, vecc_t m23, vecc_t m24,
 			vecc_t m31, vecc_t m32, vecc_t m33, vecc_t m34,
 			vecc_t m41, vecc_t m42, vecc_t m43, vecc_t m44);
-		friend Matrix operator*(Matrix &a, Matrix &b);
-		friend Matrix operator*(Matrix &a, vecc_t b);
-		friend Vector operator*(Matrix &a, Vector &b);
-		friend Matrix operator+(Matrix &a, Matrix &b);
-		friend Matrix operator-(Matrix &a, Matrix &b);
-		
+		friend Matrix operator*(Matrix a, Matrix b);
+		friend Matrix operator*(Matrix a, vecc_t b);
+		friend Vector operator*(Matrix a, Vector b);
+		friend Matrix operator+(Matrix a, Matrix b);
+		friend Matrix operator-(Matrix a, Matrix b);
+
 		Matrix inverse();
+
+		static Matrix getTranslateMatrix(Vector v);
+		static Matrix getRotateMatrix(
+				vecc_t angle,
+				Vector v);
+		static Matrix getScaleMatrix(Vector v);
+		
+		static Matrix getOrthoMatrix(
+				vecc_t left,
+				vecc_t right,
+				vecc_t bottom,
+				vecc_t top,
+				vecc_t near,
+				vecc_t far);
+
+		static Matrix getPerspectiveMatrix(
+				vecc_t fovy,
+				vecc_t aspect,
+				vecc_t near,
+				vecc_t far);
 };
 
 
@@ -51,13 +71,19 @@ class Vector
 		Vector(vecc_t x, vecc_t y, vecc_t z);
 		Vector(vecc_t x, vecc_t y);
 		Vector(vecc_t xyzw);
-		friend Vector operator*(Matrix &a, Vector &b);
-		friend Vector operator*(Vector &a, vecc_t b);
-		friend Vector operator+(Vector &a, Vector &b);
-		friend Vector operator-(Vector &a, Vector &b);
+		friend Vector operator*(Matrix a, Vector b);
+		friend Vector operator*(Vector a, vecc_t b);
+		friend Vector operator+(Vector a, Vector b);
+		friend Vector operator-(Vector a, Vector b);
+
+		friend Matrix Matrix::getTranslateMatrix(Vector v);
+		friend Matrix Matrix::getRotateMatrix(
+				vecc_t angle,
+				Vector v);
+		friend Matrix Matrix::getScaleMatrix(Vector v);
 		
-		vecc_t dot(Vector &b);
-		Vector cross(Vector &b);
+		vecc_t dot(Vector b);
+		Vector cross(Vector b);
 		vecc_t getX();
 		vecc_t getY();
 		vecc_t getZ();
