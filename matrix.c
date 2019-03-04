@@ -1081,3 +1081,4 @@ vector_t vec4(vecc_t x, vecc_t y, vecc_t z, vecc_t w)
 	return ret;
 }
 
+

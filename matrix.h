@@ -6,6 +6,9 @@
  * Compile with option -dLUA to compile with Lua support.
  */
 
+#ifndef MATRIX_H
+#define MATRIX_H
+
 typedef double vecc_t;
 #ifndef VECC_T_GL_TYPE
 #define VECC_T_GL_TYPE				GL_DOUBLE
@@ -23,6 +26,7 @@ typedef union
 	};
 	
 	vecc_t m[16];
+	
 } matrix_t;
 
 typedef union
@@ -162,3 +166,4 @@ void VectorNormalizeP(vector_t *dest, vector_t *left);
 int VectorEqualsVectorP(vector_t *left, vector_t *right);
 void VectorClampP(vector_t *dest, vector_t *left);
 
+#endif
