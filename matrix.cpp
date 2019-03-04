@@ -106,3 +106,23 @@ Vector Vector::cross(Vector &b)
 	return VectorCrossVector(this->vec, b.vec);
 }
 
+vecc_t Vector::getX()
+{
+	return this->vec.x;
+}
+
+vecc_t Vector::getY()
+{
+	return this->vec.y;
+}
+
+vecc_t Vector::getZ()
+{
+	return this->vec.z;
+}
+
+vecc_t Vector::getW()
+{
+	return this->vec.w;
+}
+

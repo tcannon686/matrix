@@ -58,6 +58,10 @@ class Vector
 		
 		vecc_t dot(Vector &b);
 		Vector cross(Vector &b);
+		vecc_t getX();
+		vecc_t getY();
+		vecc_t getZ();
+		vecc_t getW();
 };
 
 #endif
