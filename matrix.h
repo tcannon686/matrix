@@ -6,15 +6,18 @@
  * Compile with option -dLUA to compile with Lua support.
  */
 
-#ifndef MATRIX_H
-#define MATRIX_H
-
-typedef double vecc_t;
+typedef float vecc_t;
 #ifndef VECC_T_GL_TYPE
-#define VECC_T_GL_TYPE				GL_DOUBLE
+#define VECC_T_GL_TYPE				GL_FLOAT
 #endif
 
-typedef union
+union matrix;
+typedef union matrix matrix_t;
+
+union vector;
+typedef union vector vector_t;
+
+typedef union matrix
 {
 	struct
 	{
@@ -26,10 +29,33 @@ typedef union
 	};
 	
 	vecc_t m[16];
+
+#ifdef __cplusplus
+	vecc_t operator[](size_t idx);
+	matrix_t *operator+(matrix_t *right);
+	matrix_t *operator-(matrix_t *right);
+	matrix_t *operator*(matrix_t *right);
+	vector_t *operator*(vector_t *right);
+	matrix_t *operator*(vecc_t right);
+	int operator==(matrix_t *right);
 	
+	vecc_t det();
+	vecc_t trace();
+	void transpose();
+	void invert();
+	void negate();
+	matrix_t *copy();
+	
+	matrix();
+	matrix(
+		vecc_t m11, vecc_t m12, vecc_t m13, vecc_t m14,
+		vecc_t m21, vecc_t m22, vecc_t m23, vecc_t m24,
+		vecc_t m31, vecc_t m32, vecc_t m33, vecc_t m34,
+		vecc_t m41, vecc_t m42, vecc_t m43, vecc_t m44);
+#endif
 } matrix_t;
 
-typedef union
+typedef union vector
 {
 	struct
 	{
@@ -42,6 +68,31 @@ typedef union
 	};
 	
 	vecc_t m[4];
+	
+#ifdef __cplusplus
+	vector_t *operator+(vector_t *right);
+	vector_t *operator-(vector_t *right);
+	vector_t *operator*(vector_t *right);
+	vector_t *operator*(matrix_t *right);
+	vector_t *operator*(vecc_t right);
+	int operator==(vector_t *right);
+	vector_t *copy();
+	
+	void negate();
+	void normalize();
+	void clamp();
+	
+	vecc_t magnitude();
+	vecc_t dot(vector_t *right);
+	vector_t *mean(vector_t *right);
+	vector_t *cross(vector_t *right);
+	
+	vector();
+	vector(vecc_t x);
+	vector(vecc_t x, vecc_t y);
+	vector(vecc_t x, vecc_t y, vecc_t z);
+	vector(vecc_t x, vecc_t y, vecc_t z, vecc_t w);
+#endif
 } vector_t;
 
 /* C matrix functions. */
@@ -77,6 +128,9 @@ matrix_t MatrixTranspose(matrix_t a);
 
 matrix_t MatrixInverse(matrix_t a);
 
+matrix_t MatrixTo2x2(matrix_t a);
+matrix_t MatrixTo3x3(matrix_t a);
+
 int MatrixEqualsMatrix(matrix_t left, matrix_t right);
 
 const char *MatrixToString(matrix_t left);
@@ -97,6 +151,32 @@ matrix_t NewPerspectiveMatrix(
 	vecc_t far);
 matrix_t NewLookAtMatrix(vector_t eye, vector_t center, vector_t up);
 
+void NewMatrixP(
+    matrix_t *dest,
+	vecc_t m11, vecc_t m12, vecc_t m13, vecc_t m14,
+	vecc_t m21, vecc_t m22, vecc_t m23, vecc_t m24,
+	vecc_t m31, vecc_t m32, vecc_t m33, vecc_t m34,
+	vecc_t m41, vecc_t m42, vecc_t m43, vecc_t m44);
+
+void NewTranslateMatrixP(matrix_t *dest, vector_t translate);
+void NewScaleMatrixP(matrix_t *dest, vector_t scale);
+void NewRotateMatrixP(matrix_t *dest, vecc_t angle, vector_t axis);
+void NewOrthographicMatrixP(
+    matrix_t *dest, 
+	vecc_t left, vecc_t right, vecc_t bottom, vecc_t top,
+	vecc_t near, vecc_t far);
+void NewFrustrumMatrixP(
+    matrix_t *dest, 
+	vecc_t left, vecc_t right, vecc_t bottom, vecc_t top,
+	vecc_t near, vecc_t far);
+void NewPerspectiveMatrixP(
+    matrix_t *dest, 
+	vecc_t fovy,
+	vecc_t aspect,
+	vecc_t near,
+	vecc_t far);
+void NewLookAtMatrixP(matrix_t *dest, vector_t eye, vector_t center, vector_t up);
+
 void MatrixPlusMatrixP(matrix_t *dest, matrix_t *left, matrix_t *right);
 void MatrixMinusMatrixP(matrix_t *dest, matrix_t *left, matrix_t *right);
 
@@ -109,6 +189,8 @@ vecc_t MatrixTraceP(matrix_t *a);
 void MatrixTransposeP(matrix_t *dest, matrix_t *a);
 
 void MatrixInverseP(matrix_t *dest, matrix_t *a);
+void MatrixTo2x2P(matrix_t *dest, matrix_t *a);
+void MatrixTo3x3P(matrix_t *dest, matrix_t *a);
 
 int MatrixEqualsMatrixP(matrix_t *left, matrix_t *right);
 
@@ -166,4 +248,4 @@ void VectorNormalizeP(vector_t *dest, vector_t *left);
 int VectorEqualsVectorP(vector_t *left, vector_t *right);
 void VectorClampP(vector_t *dest, vector_t *left);
 
-#endif
+void VectorReflectP(vector_t *dest, vector_t *i, vector_t *n);
