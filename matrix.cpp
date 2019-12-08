@@ -26,25 +26,25 @@ Matrix::Matrix(
 }
 
 
-Matrix operator*(Matrix &a, Matrix &b)
+Matrix operator*(Matrix a, Matrix b)
 {
 	return MatrixTimesMatrix(a.mat, b.mat);
 }
-Matrix operator*(Matrix &a, vecc_t b)
+Matrix operator*(Matrix a, vecc_t b)
 {
 	return MatrixTimesScalar(a.mat, b);
 }
-Vector operator*(Matrix &a, Vector &b)
+Vector operator*(Matrix a, Vector b)
 {
 	return MatrixTimesVector(a.mat, b.vec);
 }
 
-Matrix operator+(Matrix &a, Matrix &b)
+Matrix operator+(Matrix a, Matrix b)
 {
 	return MatrixPlusMatrix(a.mat, b.mat);
 }
 
-Matrix operator-(Matrix &a, Matrix &b)
+Matrix operator-(Matrix a, Matrix b)
 {
 	return MatrixMinusMatrix(a.mat, b.mat);
 }
@@ -54,6 +54,43 @@ Matrix Matrix::inverse()
 	return MatrixInverse(this->mat);
 }
 
+Matrix Matrix::getTranslateMatrix(Vector v)
+{
+	return NewTranslateMatrix(v.vec);
+}
+
+Matrix Matrix::getRotateMatrix(
+		vecc_t angle,
+		Vector axis)
+{
+	return NewRotateMatrix(angle, axis.vec);
+}
+
+Matrix Matrix::getScaleMatrix(Vector v)
+{
+	return NewScaleMatrix(v.vec);
+}
+
+Matrix Matrix::getOrthoMatrix(
+		vecc_t left,
+		vecc_t right,
+		vecc_t bottom,
+		vecc_t top,
+		vecc_t near,
+		vecc_t far)
+{
+	return NewOrthographicMatrix(
+			left, right, bottom, top, near, far);
+}
+
+Matrix Matrix::getPerspectiveMatrix(
+		vecc_t fovy,
+		vecc_t aspect,
+		vecc_t near,
+		vecc_t far)
+{
+	return NewPerspectiveMatrix(fovy, aspect, near, far);
+}
 
 /* C++ vector functions. */
 Vector::Vector(vector_t vector)
@@ -81,28 +118,48 @@ Vector::Vector(vecc_t xyzw)
 {
 }
 
-Vector operator*(Vector &a, vecc_t b)
+Vector operator*(Vector a, vecc_t b)
 {
 	return VectorTimesScalar(a.vec, b);
 }
 
-Vector operator+(Vector &a, Vector &b)
+Vector operator+(Vector a, Vector b)
 {
 	return VectorPlusVector(a.vec, b.vec);
 }
 
-Vector operator-(Vector &a, Vector &b)
+Vector operator-(Vector a, Vector b)
 {
 	return VectorMinusVector(a.vec, b.vec);
 }
 
-vecc_t Vector::dot(Vector &b)
+vecc_t Vector::dot(Vector b)
 {
 	return VectorDotVector(this->vec, b.vec);
 }
 
-Vector Vector::cross(Vector &b)
+Vector Vector::cross(Vector b)
 {
 	return VectorCrossVector(this->vec, b.vec);
+}
+
+vecc_t Vector::getX()
+{
+	return this->vec.x;
+}
+
+vecc_t Vector::getY()
+{
+	return this->vec.y;
+}
+
+vecc_t Vector::getZ()
+{
+	return this->vec.z;
+}
+
+vecc_t Vector::getW()
+{
+	return this->vec.w;
 }
 
