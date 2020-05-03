@@ -133,6 +133,15 @@ namespace tmat
                     components[i] -= right[i];
                 }
             }
+            Vector<N, T> operator-() const
+            {
+                Vector<N, T> ret;
+                for(int i = 0; i < N; i ++)
+                {
+                    ret[i] = -components[i];
+                }
+                return ret;
+            }
 
             bool operator==(const Vector<N, T> &right) const
             {
@@ -615,6 +624,83 @@ namespace tmat
     typedef Matrix<2, 2, float> Matrix2f;
     typedef Matrix<3, 3, float> Matrix3f;
     typedef Matrix<4, 4, float> Matrix4f;
+
+
+    template<class T>
+    Matrix<4, 4, T> getTranslateMatrix(Vector<3, T> t)
+    {
+        return Matrix<4, 4, T> {
+            { 1, 0, 0, t[0] },
+            { 0, 1, 0, t[1] },
+            { 0, 0, 1, t[2] },
+            { 0, 0, 0, 1 }
+        };
+    }
+
+    template<class T>
+    Matrix<4, 4, T> getTranslateMatrix(Vector<4, T> t)
+    {
+        return Matrix<4, 4, T> {
+            { 1, 0, 0, t[0] },
+            { 0, 1, 0, t[1] },
+            { 0, 0, 1, t[2] },
+            { 0, 0, 0, 1 }
+        };
+    }
+
+    template<class T>
+    Matrix<4, 4, T> getScaleMatrix(Vector<3, T> t)
+    {
+        return Matrix<4, 4, T> {
+            { t[0],    0,    0,    0 },
+            {    0, t[1],    0,    0 },
+            {    0,    0, t[2],    0 },
+            {    0,    0,    0,    1 }
+        };
+    }
+
+    template<class T>
+    Matrix<4, 4, T> getScaleMatrix(Vector<4, T> t)
+    {
+        return Matrix<4, 4, T> {
+            { t[0],    0,    0,    0 },
+            {    0, t[1],    0,    0 },
+            {    0,    0, t[2],    0 },
+            {    0,    0,    0,    1 }
+        };
+    }
+
+    template<class T>
+    Matrix<4, 4, T> getRotateMatrix(T angle, Vector<3, T> axis)
+    {
+        T s = sin(angle);
+        T c = cos(angle);
+        T x = axis[0];
+        T y = axis[1];
+        T z = axis[2];
+        return Matrix<4, 4, T>{
+            {   x*x*(1-c)+c, x*y*(1-c)-z*s, x*z*(1-c)+y*s,             0 },
+            { y*x*(1-c)+z*s,   y*y*(1-c)+c, y*z*(1-c)-x*s,             0 },
+            { x*z*(1-c)-y*s, y*z*(1-c)+x*s,   z*z*(1-c)+c,             0 },
+            {             0,             0,             0,             1 }
+        };
+    }
+
+    template<class T>
+    Matrix<4, 4, T> getRotateMatrix(T angle, Vector<4, T> axis)
+    {
+        T s = sin(angle);
+        T c = cos(angle);
+        T x = axis.x;
+        T y = axis.y;
+        T z = axis.z;
+        return Matrix<4, 4, T>{
+            {   x*x*(1-c)+c, x*y*(1-c)-z*s, x*z*(1-c)+y*s,             0 },
+            { y*x*(1-c)+z*s,   y*y*(1-c)+c, y*z*(1-c)-x*s,             0 },
+            { x*z*(1-c)-y*s, y*z*(1-c)+x*s,   z*z*(1-c)+c,             0 },
+            {             0,             0,             0,             1 }
+        };
+    }
 };
 
 #endif
