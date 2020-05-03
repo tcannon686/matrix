@@ -1,3 +1,6 @@
+#ifndef MATRIX_HPP
+#define MATRIX_HPP
+
 #include <algorithm>
 #include <cmath>
 #include <iostream>
@@ -613,3 +616,5 @@ namespace tmat
     typedef Matrix<3, 3, float> Matrix3f;
     typedef Matrix<4, 4, float> Matrix4f;
 };
+
+#endif
