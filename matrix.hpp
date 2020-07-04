@@ -412,6 +412,19 @@ namespace tmat
                 return ret;
             }
 
+            bool operator==(const Matrix<M, N, T> &other) const
+            {
+                for(int i = 0; i < M; i ++)
+                {
+                    for(int j = 0; j < N; j ++)
+                    {
+                        if(rows[i][j] != other.rows[i][j])
+                            return false;
+                    }
+                }
+                return true;
+            }
+
             T determinant()
             {
                 static_assert(M == N);
