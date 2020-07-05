@@ -86,10 +86,36 @@ bool testInvert()
     return true;
 }
 
+bool testTranspose()
+{
+    cout << "test transpose matrix" << endl;
+
+    Matrix<4, 4, float> a {
+        { 1, 2, 3, 4 },
+        { 5, 6, 7, 8 },
+        { 9, 10, 11, 12 },
+        { 13, 14, 15, 16 }
+    };
+
+    Matrix<4, 4, float> e {
+        { 1, 5, 9, 13 },
+        { 2, 6, 10, 14 },
+        { 3, 7, 11, 15 },
+        { 4, 8, 12, 16 }
+    };
+
+    cout << a << endl;
+    cout << "Expected: " << e << endl;
+    a.transpose();
+    cout << "Actual: " << a << endl;
+    return a == e;
+}
+
 int main(int argc, char *argv[])
 {
     assert(testMultiply());
     assert(testMultiplyVector());
     assert(testInvert());
+    assert(testTranspose());
 }
 

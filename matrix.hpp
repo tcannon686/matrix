@@ -563,11 +563,9 @@ namespace tmat
                 static_assert(M == N);
                 for(int i = 0; i < M; i ++)
                 {
-                    for(int j = 0; j < N; j ++)
+                    for(int j = 0; j < i; j ++)
                     {
-                        auto tmp = rows[i][j];
-                        rows[i][j] = rows[j][i];
-                        rows[j][i] = tmp;
+                        swap(rows[i][j], rows[j][i]);
                     }
                 }
             }
