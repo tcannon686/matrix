@@ -236,7 +236,7 @@ namespace tmat
                 }
             }
 
-            Vector<N, T> normalized()
+            Vector<N, T> normalized() const
             {
                 Vector<N, T> ret = *this;
                 ret.normalize();
@@ -244,7 +244,7 @@ namespace tmat
             }
 
             /* Cut the last element off the vector. */
-            Vector<N - 1, T> cut()
+            Vector<N - 1, T> cut() const
             {
                 Vector<N - 1, T> ret;
                 for(int i = 0; i < N - 1; i ++)
@@ -255,7 +255,7 @@ namespace tmat
             }
 
             /* Add another 1 to the end of the vector. */
-            Vector<N + 1, T> homo()
+            Vector<N + 1, T> homo() const
             {
                 Vector<N + 1, T> ret;
                 for(int i = 0; i < N; i ++)
@@ -268,7 +268,7 @@ namespace tmat
             }
 
             template<typename U>
-            void toArray(U ret[])
+            void toArray(U ret[]) const
             {
                 for(int i = 0; i < N; i ++)
                 {
@@ -456,7 +456,7 @@ namespace tmat
                 return true;
             }
 
-            T determinant()
+            T determinant() const
             {
                 static_assert(M == N);
                 T ret = 0;
@@ -475,7 +475,7 @@ namespace tmat
                 return ret;
             }
 
-            T trace()
+            T trace() const
             {
                 T ret = 0;
                 for(int i = 0; i < min(M, N); i ++)
@@ -525,7 +525,7 @@ namespace tmat
                 }
             }
 
-            Matrix<M, N, T> reduced()
+            Matrix<M, N, T> reduced() const
             {
                 Matrix<M, N, T> ret = *this;
                 ret.reduce();
@@ -551,7 +551,7 @@ namespace tmat
                 }
             }
 
-            Matrix<M, N, T> inverse()
+            Matrix<M, N, T> inverse() const
             {
                 Matrix<M, N, T> mat = *this;
                 mat.invert();
@@ -572,7 +572,7 @@ namespace tmat
                 }
             }
 
-            Matrix<N, M, T> transposed()
+            Matrix<N, M, T> transposed() const
             {
                 Matrix<N, M, T> ret = *this;
                 for(int i = 0; i < M; i ++)
@@ -585,7 +585,7 @@ namespace tmat
                 return ret;
             }
 
-            void sub(Matrix<M - 1, N - 1, T> &out, int m, int n)
+            void sub(Matrix<M - 1, N - 1, T> &out, int m, int n) const
             {
                 for(int i = 0; i < M - 1; i ++)
                 {
@@ -597,7 +597,7 @@ namespace tmat
                 }
             }
 
-            Matrix<M - 1, N - 1, T> sub(int m, int n)
+            Matrix<M - 1, N - 1, T> sub(int m, int n) const
             {
                 Matrix<M - 1, N - 1, T> ret;
                 sub(ret, m, n);
@@ -608,7 +608,7 @@ namespace tmat
              * Put the matrix into an array, default column major order.
              */
             template<typename U>
-            void toArray(U ret[], bool transpose)
+            void toArray(U ret[], bool transpose) const
             {
                 if(!transpose)
                 {
@@ -633,7 +633,7 @@ namespace tmat
             }
 
             template<typename U>
-            void toArray(U ret[])
+            void toArray(U ret[]) const
             {
                 toArray(ret, false);
             }
