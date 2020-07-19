@@ -743,6 +743,33 @@ namespace tmat
             {             0,             0,             0,             1 }
         };
     }
-};
+
+    template<int N, class T>
+    void transform(
+            Vector<N - 1, T> &out,
+            const Matrix<N, N, T> matrix,
+            const Vector<N - 1, T> vector)
+    {
+        Vector<N, T> ret = matrix * vector.homo();
+        for(int i = 0; i < N - 1; i ++)
+        {
+            out[i] = ret[i];
+        }
+    }
+
+    template<int N, class T>
+    Vector<N - 1, T> transform(
+            const Matrix<N, N, T> matrix,
+            const Vector<N - 1, T> vector)
+    {
+        Vector<N, T> ret = matrix * vector.homo();
+        Vector<N - 1, T> out;
+        for(int i = 0; i < N - 1; i ++)
+        {
+            out[i] = ret[i];
+        }
+        return out;
+    }
+} /* namespace */
 
 #endif

@@ -111,11 +111,40 @@ bool testTranspose()
     return a == e;
 }
 
+bool testTransform()
+{
+    cout << "test transform 3 vector by 4 matrix" << endl;
+    Matrix<4, 4, float> m {
+        { 1, 5, 9, 13 },
+        { 2, 6, 10, 14 },
+        { 3, 7, 11, 15 },
+        { 4, 8, 12, 16 }
+    };
+
+    Vector<3, float> x { 3, 2, 1 };
+    Vector<4, float> y { 3, 2, 1, 1 };
+
+    Vector<3, float> a = transform(m, x);
+    Vector<3, float> e = (m * y).cut();
+    Vector<3, float> b;
+
+    transform(b, m, x);
+
+    cout << "Expected: " << e << endl;
+    cout << "Actual: " << a << endl;
+    cout << "Actual2: " << b << endl;
+
+    return (a == e) && (b == e);
+}
+
 int main(int argc, char *argv[])
 {
     assert(testMultiply());
     assert(testMultiplyVector());
     assert(testInvert());
     assert(testTranspose());
+
+    cout << endl;
+    cout << "Success!" << endl;
 }
 
