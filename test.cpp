@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cassert>
+#include <array>
 #include "matrix.hpp"
 
 using namespace tmat;
@@ -137,12 +138,37 @@ bool testTransform()
     return (a == e) && (b == e);
 }
 
+bool testArray()
+{
+    cout << "testing array of vectors." << endl;
+
+    array<Vector3f, 4> arr;
+
+    Vector3f a { 1, 2, 3 };
+    Vector3f b { 3, 1, 9 };
+    Vector3f c { 4, 3, 7 };
+    Vector3f d { 7, 1, 4 };
+
+    arr[0] = a;
+    arr[1] = b;
+    arr[2] = c;
+    arr[3] = c;
+
+    for(int i = 0; i < 4; i ++)
+    {
+        cout << arr[i] << endl;
+    }
+
+    return true;
+}
+
 int main(int argc, char *argv[])
 {
     assert(testMultiply());
     assert(testMultiplyVector());
     assert(testInvert());
     assert(testTranspose());
+    assert(testArray());
 
     cout << endl;
     cout << "Success!" << endl;
