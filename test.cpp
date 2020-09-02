@@ -162,6 +162,33 @@ bool testArray()
     return true;
 }
 
+bool testCrossProduct()
+{
+    cout << "testing cross product." << endl;
+
+    Vector3f a, b;
+
+    a = Vector3f::right;
+    b = Vector3f::up;
+    cout << a << " x " << b << " = " << a.cross(b) << endl;
+    if(a.cross(b) != Vector3f::forward)
+        return false;
+
+    a = Vector3f::forward;
+    b = Vector3f::right;
+    cout << a << " x " << b << " = " << a.cross(b) << endl;
+    if(a.cross(b) != Vector3f::up)
+        return false;
+
+    a = Vector3f::up;
+    b = Vector3f::forward;
+    cout << a << " x " << b << " = " << a.cross(b) << endl;
+    if(a.cross(b) != Vector3f::right)
+        return false;
+
+    return true;
+}
+
 int main(int argc, char *argv[])
 {
     assert(testMultiply());
@@ -169,6 +196,7 @@ int main(int argc, char *argv[])
     assert(testInvert());
     assert(testTranspose());
     assert(testArray());
+    assert(testCrossProduct());
 
     cout << endl;
     cout << "Success!" << endl;

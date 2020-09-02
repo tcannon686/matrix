@@ -177,6 +177,20 @@ namespace tmat
 
             /**
              * \brief
+             *     Returns true if the two vectors components are not all equal
+             */
+            bool operator!=(const Vector<N, T> &right) const
+            {
+                for(int i = 0; i < N; i ++)
+                {
+                    if(components[i] != right[i])
+                        return true;
+                }
+                return false;
+            }
+
+            /**
+             * \brief
              *     Returns true if for all indices 0 <= i < N, this[i] > right[i]
              */
             bool operator>(const Vector<N, T> &right) const
