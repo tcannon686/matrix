@@ -518,7 +518,7 @@ namespace tmat
              */
             Vector<N, T> row(int i) const
             {
-                return row[i];
+                return rows[i];
             }
 
             /**
